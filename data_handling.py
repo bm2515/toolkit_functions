@@ -4,19 +4,23 @@ def identify_missing_dates(df):
     pass
 
 
-#Strategy : [zeroes, drop, fill]
-def handle_missing_dates(df, strategy='drop'):
+#strategy : [fill, drop]
+#how: [default, zeros]
+#rows: [all, int]
+def handle_missing_dates(df, strategy='fill', how='default', rows='all'):
     pass
 
   
-def identify_missing_features(df, baseline_features=None):
+def identify_nontimestamp_missing_data(df, baseline_features=None):
     #baseline_features is a list of given features which helps idenitify missing data in other columns
     #returns all records with missing features in one or more columns
     pass
 
 
-#Strategy: [drop, next, previous, average, groupby_average: day, weekend, weekdays]
-def handle_missing_features(df, strategy = 'avg'):
+#Strategy: [drop, fill]
+#how: [next, prev, avg, groupby_avg: day, weekend, weekdays]
+#rows: [all, int]
+def handle_nontimestamp_missing_data(df, strategy = 'fill', how='avg', rows='all'):
     pass
 
 #Statistic: [mean, variance, standard deviation]
@@ -55,9 +59,18 @@ def add_weekday(df):
     pass
 
 
-def display_summary(df):
+def describe_dataset(df, features='all', identify_missing_data='yes'):
+    #computer statistics for the given features: mean, median, standard deviation, interquartatile range, max, min, etc.
     #Display data types for each feature and its labels
     #Display statistic for each feature : % of missing data in each column
+    
+    #Pseudocode Implementation
+    import pandas as pd
+    print(df.describe().to_string())
+    if identify_missing_data:
+        identify_missing_dates()
+        identify_nontimestamp_missing_data()
+
     pass
 
 
@@ -65,5 +78,10 @@ def merge_dataframes(df_1, df_2, merge_on='feature'):
     pass
 
 
-def normalize(df):
+def normalize(df, strategy='default'):
     pass
+
+#Tasks for today:
+#base_functions.py 
+#Implement display summary function
+#Waiting for validation to play with apple heart count data
