@@ -1,10 +1,11 @@
 import requests
 import json
 import pandas as pd
+from URL_requests import make_post_get_requests
 
 def generate_siha_access_token(username, password):
     
-    response = requests.get('http://localhost:5000/siha-api/clinicians/admin/login', auth=(username, password))
+    response = requests.get('http://siha-staging.qcri.org/siha-api/clinicians/admin/login', auth=(username, password))
     access_token = response.text.replace('\n}\n', "").replace(' ','').replace('"', "").replace('{\n', '').replace('token:','')
     return access_token
 
@@ -34,9 +35,9 @@ def read_siha_activity_data(access_token=None, feature_name=None, patient_id=Non
     A python dict object
     '''
     
-    url = 'http://localhost:5000/siha-api/v1/data/{}/patientid/{}/start/{}/end/{}'
+    url = 'http://siha-staging.qcri.org/siha-api/v1/data/{}/patientid/{}/start/{}/end/{}'
     url = url.format(feature, patient_id, start_date, end_date)
-    response = test_post_get_requests("GET", url, token, payload=None)
+    response = make_post_get_requests("GET", url, token, payload=None)
     return response
 
     
@@ -60,5 +61,6 @@ def read_data_json_file(filename, keys=None):
     return read_data_json(dict_obj, keys)
 
 def read_fitbit_activity_data(access_token, refresh_token):
-    #Need to play with FitBit API and authentication process 
+    #Need to play with FitBit API and authentication process by registering an application
+    #Next task
     pass
